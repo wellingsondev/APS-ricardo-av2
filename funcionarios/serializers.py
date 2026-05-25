@@ -9,6 +9,7 @@ class FuncionarioSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Funcionario
+
         fields = [
             'id',
             'username',
@@ -16,6 +17,10 @@ class FuncionarioSerializer(serializers.ModelSerializer):
             'nome',
             'idade',
             'cargo',
+            'cpf',
+            'telefone',
+            'email'
+            
         ]
     def create(self, validated_data):
         username = validated_data.pop('username')

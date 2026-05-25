@@ -1,0 +1,229 @@
+.clientes-container{
+  margin-left:260px;
+  padding:30px;
+  min-height:100vh;
+  background:#f4f7fb;
+  color:#1e293b;
+}
+
+.topo {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+.topo h1 {
+  color: #0f172a;
+}
+
+.input-busca {
+  width: 300px;
+  padding: 12px;
+  border-radius: 10px;
+  border: 1px solid #cbd5e1;
+}
+
+.card-form,
+.card-tabela {
+  background: white;
+  padding: 25px;
+  border-radius: 18px;
+  margin-bottom: 25px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.grid-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+}
+
+input,
+textarea {
+  width: 100%;
+  padding: 14px;
+  border-radius: 10px;
+  border: 1px solid #cbd5e1;
+  margin-top: 10px;
+}
+
+textarea {
+  min-height: 100px;
+  margin-top: 15px;
+}
+
+.acoes-form {
+  display: flex;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.btn-salvar {
+  background: #2563eb;
+  color: white;
+  border: none;
+  padding: 12px 22px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.btn-limpar {
+  background: #94a3b8;
+  color: white;
+  border: none;
+  padding: 12px 22px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.btn-editar {
+  background: #f59e0b;
+  color: white;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 8px;
+  margin-right: 8px;
+  cursor: pointer;
+}
+
+.btn-excluir {
+  background: #ef4444;
+  color: white;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+thead {
+  background: #2563eb;
+  color: white;
+}
+
+th,
+td {
+  padding: 15px;
+  text-align: left;
+}
+
+tbody tr {
+  border-bottom: 1px solid #e2e8f0;
+}
+
+tbody tr:hover {
+  background: #f8fafc;
+}
+
+.erro {
+  background: #fee2e2;
+  color: #991b1b;
+  padding: 15px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+
+.sucesso {
+  background: #dcfce7;
+  color: #166534;
+  padding: 15px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+.grid-form select{
+
+width:100%;
+
+padding:14px;
+
+margin-top:13px;
+
+background:white;
+
+color:#1e293b;
+
+border:1px solid #cbd5e1;
+
+border-radius:12px;
+
+font-size:14px;
+
+font-family:inherit;
+
+outline:none;
+
+transition:.25s;
+
+height:50px;
+
+}
+
+
+.grid-form select:hover{
+
+border-color:#60a5fa;
+
+}
+
+
+.grid-form select:focus{
+
+border-color:#2563eb;
+
+box-shadow:
+0 0 0 3px
+rgba(37,99,235,.20);
+
+}
+
+
+
+.grid-form select option{
+
+background:#1f2937;
+
+color:white;
+
+}
+
+
+
+.grid-form select{
+
+appearance:none;
+
+background-image:
+
+linear-gradient(
+45deg,
+transparent 50%,
+#60a5fa 50%
+),
+
+linear-gradient(
+135deg,
+#60a5fa 50%,
+transparent 50%
+);
+
+background-position:
+
+calc(100% - 20px) 22px,
+
+calc(100% - 14px) 22px;
+
+background-size:
+
+6px 6px,
+6px 6px;
+
+background-repeat:no-repeat;
+
+padding-right:45px;
+
+}

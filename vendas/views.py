@@ -4,7 +4,7 @@ from rest_framework.permissions import IsAuthenticated
 from .models import Venda
 from .serializers import VendaSerializer
 
-from funcionarios.models import Funcionario
+from .models import Funcionario
 
 
 class VendaViewSet(viewsets.ModelViewSet):
@@ -12,8 +12,8 @@ class VendaViewSet(viewsets.ModelViewSet):
     queryset = Venda.objects.all()
 
     serializer_class = VendaSerializer
-
-    permission_classes = [IsAuthenticated]
+    is_authenticated = IsAuthenticated
+  
 
     def perform_create(self, serializer):
 

@@ -1,71 +1,97 @@
 from rest_framework import serializers
 from .models import Venda, ItemVenda
-from clientes.serializers import ClienteSerializer
-from produtos.serializers import ProdutoSerializer
+from .models import Produto
 
 
 class ItemVendaSerializer(serializers.ModelSerializer):
-
-    produto_detalhes = ProdutoSerializer(source='produto', read_only=True)
+    produto_nome = serializers.CharField(source='produto.nome', read_only=True)
 
     class Meta:
         model = ItemVenda
-        fields = [
-            'produto',
-            'quantidade',
-            'subtotal',
-            'produto_detalhes'
-        ]
-        read_only_fields = ['subtotal']
+        fields = ['id', 'produto', 'produto_nome', 'quantidade', 'preco']
+
 
 class VendaSerializer(serializers.ModelSerializer):
-    itens = ItemVendaSerializer(many=True)
+    itens = ItemVendaSerializer(many=True, required=False)
+
+    cliente_nome = serializers.CharField(source='cliente.nome', read_only=True)
+    funcionario_nome = serializers.CharField(source='funcionario.nome', read_only=True)
 
     class Meta:
         model = Venda
-        fields = '__all__'
-        
-        read_only_fields = ['funcionario', 'total']
+        fields = [
+            'id',
+            'cliente',
+            'cliente_nome',
+            'funcionario',
+            'funcionario_nome',
+            'total',
+            'data_venda',
+            'itens'
+        ]
 
-    def validate(self, data):
-        itens = data.get('itens', [])
-      
-        if not itens:
-            raise serializers.ValidationError("A venda deve conter pelo menos um item.")
-        for item in itens:
-
-            produto = item['produto']
-            quantidade = item['quantidade']
-
-            if quantidade <= 0:
-                raise serializers.ValidationError(f"A quantidade para o produto {produto.nome} deve ser maior que zero.")
-            if produto.estoque < quantidade:
-                raise serializers.ValidationError(f"Estoque insuficiente para o produto {produto.nome}. Estoque disponível: {produto.estoque}")
-        return data
-    
+    # 🔥 CREATE
     def create(self, validated_data):
-
-        itens_data = validated_data.pop('itens')
+        itens_data = validated_data.pop('itens', [])
         venda = Venda.objects.create(**validated_data)
-        total_venda = 0
-        
-        for item in itens_data:
 
+        total = 0
+
+        for item in itens_data:
             produto = item['produto']
             quantidade = item['quantidade']
-            subtotal = produto.preco * quantidade
-            
+
+            # 🔥 preço SEMPRE do produto (banco)
+            preco = produto.preco
+
             ItemVenda.objects.create(
                 venda=venda,
                 produto=produto,
                 quantidade=quantidade,
-                subtotal=subtotal
+                preco=preco
             )
-            
-            # Atualiza o estoque do produto
-            produto.estoque -= quantidade
-            produto.save()
-            total_venda += subtotal
-        venda.total = total_venda
+
+            total += preco * quantidade
+
+        venda.total = total
         venda.save()
+
         return venda
+
+    # 🔥 UPDATE (corrigido e sem bug de duplicação de cálculo)
+    def update(self, instance, validated_data):
+        itens_data = validated_data.pop('itens', None)
+
+        instance.cliente = validated_data.get('cliente', instance.cliente)
+        instance.funcionario = validated_data.get('funcionario', instance.funcionario)
+        instance.save()
+
+        if itens_data is not None:
+            instance.itens.all().delete()
+
+            total = 0
+
+            for item in itens_data:
+                produto = item['produto']
+                quantidade = item['quantidade']
+
+                if produto.estoque < quantidade:
+                    raise serializers.ValidationError(
+                        f"Estoque insuficiente para o produto {produto.nome}"
+                )
+                
+                preco = produto.preco
+
+                ItemVenda.objects.create(
+                    venda=instance,
+                    produto=produto,
+                    quantidade=quantidade,
+                    preco=preco
+                )
+
+                total += preco * quantidade
+
+            instance.total = total
+            instance.save()
+
+        return instance
