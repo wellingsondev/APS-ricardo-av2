@@ -50,7 +50,12 @@ class VendaSerializer(serializers.ModelSerializer):
                 quantidade=quantidade,
                 preco=preco
             )
-
+            if produto.estoque < quantidade:
+                raise serializers.ValidationError(
+                    f"Estoque insuficiente para o produto {produto.nome}"
+                )
+            produto.estoque -= quantidade
+            produto.save()
             total += preco * quantidade
 
         venda.total = total
