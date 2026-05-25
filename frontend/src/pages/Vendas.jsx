@@ -48,7 +48,48 @@ export default function Vendas() {
       setClientes(c.data);
       setFuncionarios(f.data);
       setProdutos(p.data);
-      setVendas(v.data);
+      setVendas(v.data.map(venda=>({
+
+...venda,
+
+itens:
+
+venda.itens.map(i=>{
+
+const prod=
+
+p.data.find(
+x=>x.id===i.produto
+);
+
+return{
+
+...i,
+
+preco:
+prod?.preco || 0,
+
+subtotal:
+
+(
+Number(
+prod?.preco || 0
+)
+
+*
+
+Number(
+i.quantidade
+)
+
+)
+
+};
+
+})
+
+}))
+);
 
     }
     catch {
@@ -84,54 +125,76 @@ export default function Vendas() {
   // ADICIONAR ITEM
   // =========================
 
-  function adicionarCarrinho() {
+  function adicionarCarrinho(){
 
     setErro("");
 
-    if (!produto)
-      return setErro("Selecione produto");
-
-    if (!quantidade)
-      return setErro("Informe quantidade");
-
-    const prod = produtos.find(
-      p => p.id == produto
+    if(!produto)
+    return setErro(
+    "Selecione produto"
     );
 
-    if (!prod)
-      return;
+    if(quantidade<=0)
+    return setErro(
+    "Quantidade inválida"
+    );
 
-    const precoUnitario =
-      Number(prod.preco);
+    const prod=
+    produtos.find(
+    p=>p.id==produto
+    );
 
-    const subtotal =
-      precoUnitario *
-      Number(quantidade);
+    if(!prod)
+    return;
+
+    if(
+    Number(quantidade)
+    >
+    Number(prod.estoque)
+    ){
+
+    return setErro(
+
+    `Estoque disponível: ${prod.estoque}`
+
+    );
+
+    }
+
+    const subtotal=
+
+    Number(prod.preco)
+    *
+    Number(quantidade);
 
     setItens([
 
-      ...itens,
+    ...itens,
 
-      {
+    {
 
-        produto: prod.id,
+    produto: prod.id,
 
-        nome: prod.nome,
+    nome: prod.nome,
 
-        quantidade: Number(quantidade),
+    quantidade: Number(quantidade),
 
-        preco: precoUnitario,
+    preco: Number(prod.preco),
 
-        subtotal
+    subtotal:
+    Number(prod.preco)
+    *
+    Number(quantidade)
 
-      }
+    }
 
     ]);
 
-    setProduto("");
     setQuantidade(1);
 
-  }
+    setProduto("");
+
+    }
 
   // =========================
   // REMOVER ITEM
