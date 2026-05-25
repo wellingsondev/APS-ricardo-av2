@@ -1,221 +1,77 @@
-# 🛒 Sistema de Gestão de Vendas
+🛒 Sistema de Vendas (PDV)
 
-Sistema de gerenciamento de vendas desenvolvido com:
+Sistema completo de gestão de vendas, clientes, produtos e funcionários, desenvolvido com Django REST Framework no backend e React no frontend.
 
-* Backend: Django REST Framework
-* Frontend: Streamlit
-* Banco de dados: SQLite
-* Autenticação: JWT
+O sistema permite criar vendas com múltiplos itens, controle de estoque e histórico completo de operações.
 
----
-
-# 📌 Funcionalidades
-
-## 👨‍💼 Funcionários
-
-* Cadastro de funcionários
-* Login individual
-* Edição de dados
-* Exclusão de funcionários
-
-## 👥 Clientes
-
-* Cadastro de clientes
-* Listagem de clientes
-* Edição de clientes
-* Exclusão de clientes
-
-## 📦 Produtos
-
-* Cadastro de produtos
-* Controle de estoque
-* Edição de produtos
-* Exclusão de produtos
-
-## 💰 Vendas
-
-* Cadastro de vendas
-* Venda com múltiplos produtos
-* Carrinho de compras
-* Cálculo automático do total
-* Atualização automática do estoque
-
-## 📊 Dashboard
-
-* Quantidade de clientes
-* Quantidade de produtos
-* Quantidade de vendas
-
----
-
-# 🛠️ Tecnologias Utilizadas
-
-## Backend
-
-* Python
-* Django
-* Django REST Framework
-* Simple JWT
-
-## Frontend
-
-* Streamlit
-
-## Banco de Dados
-
-* SQLite
-
----
-
-# 🚀 Como Executar o Projeto
-
-## 1️⃣ Clonar o repositório
-
-```bash
-git clone URL_DO_REPOSITORIO
-```
-
----
-
-## 2️⃣ Entrar na pasta
-
-```bash
-cd NOME_DO_PROJETO
-```
-
----
-
-## 3️⃣ Criar ambiente virtual
-
-```bash
+🚀 Tecnologias utilizadas
+Backend
+Django 6
+Django REST Framework
+SQLite
+SimpleJWT (autenticação)
+Frontend
+React
+React Router DOM
+React Query (@tanstack/react-query)
+Axios
+CSS customizado
+📦 Funcionalidades
+👤 Clientes
+Cadastro
+Listagem
+Edição
+Exclusão
+👨‍💼 Funcionários
+Cadastro
+Controle de acesso às vendas
+📦 Produtos
+Cadastro com preço e estoque
+Atualização
+Controle de quantidade disponível
+🧾 Vendas (PDV)
+Adição de múltiplos produtos
+Cálculo automático de total
+Histórico de vendas
+Edição de vendas
+Exclusão de vendas
+Controle de estoque (evita estoque negativo)
+⚙️ Como executar o projeto
+🔧 Backend (Django)
+# criar ambiente virtual
 python -m venv venv
-```
 
----
+# ativar
+venv\Scripts\activate  # Windows
 
-## 4️⃣ Ativar ambiente virtual
-
-### Windows
-
-```bash
-venv\Scripts\activate
-```
-
----
-
-## 5️⃣ Instalar dependências
-
-```bash
+# instalar dependências
 pip install -r requirements.txt
-```
 
----
-
-# 🚀 Rodando o Backend Django
-
-## Fazer migrações
-
-```bash
-python manage.py makemigrations
+# rodar migrations
 python manage.py migrate
-```
 
----
-
-## Criar superusuário
-
-```bash
-python manage.py createsuperuser
-```
-
----
-
-## Rodar servidor Django
-
-```bash
+# iniciar servidor
 python manage.py runserver
-```
 
-Servidor:
+Servidor roda em:
 
-```text
 http://127.0.0.1:8000/
-```
-
----
-
-# 🚀 Rodando o Frontend Streamlit
-
-Entrar na pasta frontend:
-
-```bash
+💻 Frontend (React)
 cd frontend
-```
 
-Rodar:
+# instalar dependências
+npm install
 
-```bash
-streamlit run app.py
-```
+# rodar projeto
+npm run dev
 
-Frontend:
+Frontend roda em:
 
-```text
-http://localhost:8501
-```
+http://localhost:5173/
+🔐 Autenticação
 
----
+O sistema utiliza JWT:
 
-# 🔐 Login
-
-O sistema utiliza autenticação JWT.
-
-Cada funcionário possui:
-
-* login
-* senha
-* acesso individual
-
----
-
-# 📂 Estrutura do Projeto
-
-```text
-projeto/
-│
-├── clientes/
-├── funcionarios/
-├── produtos/
-├── vendas/
-├── frontend/
-│   └── app.py
-├── config/
-├── manage.py
-└── requirements.txt
-```
-
----
-
-# 📌 Melhorias Futuras
-
-* Permissões por cargo
-* Dashboard com gráficos
-* Relatórios PDF
-* PostgreSQL
-* Deploy na nuvem
-* Tema dark mode
-* Busca avançada de produtos
-
----
-
-# 👨‍🎓 Projeto Acadêmico
-
-Projeto desenvolvido para apresentação acadêmica com foco em:
-
-* API REST
-* CRUD
-* autenticação
-* integração frontend/backend
-* gestão de vendas
-
----
+Login gera token
+Token é enviado no header:
+Authorization: Bearer <token>
