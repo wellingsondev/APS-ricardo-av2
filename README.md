@@ -74,4 +74,4 @@ O sistema utiliza JWT:
 
 Login gera token
 Token é enviado no header:
-Authorization: Bearer <token>
+Authorization: Bearer <token> 
